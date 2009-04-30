@@ -3,7 +3,7 @@ module Astrails
     class Mysqldump < Source
 
       def command
-        @commanbd ||= "mysqldump --defaults-extra-file=#{mysql_password_file} #{@config[:options]} #{mysql_skip_tables} #{@id}"
+        @command ||= "#{path}mysqldump --defaults-extra-file=#{mysql_password_file} #{@config[:options]} #{mysql_skip_tables} #{@id}"
       end
 
       def extension; '.sql'; end
@@ -25,7 +25,10 @@ module Astrails
           [*skip_tables].map { |t| "--ignore-table=#{@id}.#{t}" } * " "
         end
       end
-
+      
+      def path
+        @config[:path] ||= ""
+      end
     end
   end
 end
